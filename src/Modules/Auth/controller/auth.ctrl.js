@@ -68,6 +68,8 @@ export const finishConfirmation = async (req, res) => {
         );
         if (confirmed.modifiedCount) {
           return res.status(200).json({ messege: "done" });
+          //return res.redirect(process.env.frontendBaseURL)
+          //redirectiooooooooooooooooooooooooooooooon
         } else {
           return res.status(404).json({ messege: "no such user" });
         }

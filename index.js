@@ -14,6 +14,10 @@ const app = express()
 
 
 app.use(express.json())
+app.get('/cors', (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.send({ "msg": "This has CORS enabled" })
+    })
 app.use(cors({}))
 
 app.use(`${process.env.baseUrl}/auth`, routers.authRouter)
