@@ -31,13 +31,14 @@ export const signUp = async (req, res) => {
         );
         const link = `${req.protocol}://${req.headers.host}${process.env.baseUrl}/auth/confirmEmail/${confirmationToken}`;
 
-        confirmationMail(
+        const info = await confirmationMail(
           email,
           "Email Confirmation",
           ` 
                 <a href=${link}>click here to confirm Email <a>
         `
         );
+        console.log(info)
 
         return res.status(201).json({
           messege: "done, confirmation link have been sent to your email",

@@ -1,22 +1,27 @@
-import nodeoutlook from 'nodejs-nodemailer-outlook'
+import nodemailer from "nodemailer"
 
-export const confirmationMail = (dest , subject , content)=>{
+export const confirmationMail = async (dest, subject, message, attachments = []) => {
     try {
-        nodeoutlook.sendEmail({
-            auth: {
-                user: process.env.confirmMail,
-                pass: process.env.confirmMailPassword
-            },
-            from: process.env.confirmMail,
-            to: dest,
-            subject,
-            html: content,
-        
-            onError: (e) => console.log(e),
-            onSuccess: (i) => console.log(i)
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.confirmMail,
+          pass: process.env.confirmMailPassword 
+        },
+        tls: {
+          rejectUnauthorized: false
         }
-        )
+      })
+  
+      let info = await transporter.sendMail({
+        from: 'TODURA',
+        to: dest,
+        subject,
+        html: message,
+        attachments
+      })
+      return info
     } catch (error) {
-        res.status(404).json({messege:"email not found" , error})
+      console.log(error);
     }
-};
+  }
