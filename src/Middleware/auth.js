@@ -3,7 +3,7 @@ import { userModel } from "../../DB/Models/user.model.js";
 
 export function auth() {
   return async (req, res, next) => {
-    try {
+    // try {
       const { token } = req.headers;
       if (token.startsWith(process.env.bearer)) {
         const realToken = token.split(process.env.bearer)[1];
@@ -23,8 +23,8 @@ export function auth() {
       } else {
         res.status(401).json({ messege: "invalid token" });
       }
-    } catch (error) {
-      res.status(400).json({ messege: "error occured in auth",  error });
-    }
+    // } catch (error) {
+    //   res.status(400).json({ messege: "error occured in auth",  error });
+    // }
   };
 }

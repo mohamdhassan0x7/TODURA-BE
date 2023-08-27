@@ -31,7 +31,15 @@ export const changePassword = async (req, res) => {
     }
 }
 
+function getCurrentTimeInEgypt() {
+  // Create a new Date object for the current time in Egypt (UTC+2)
+  const timeInEgypt = new Date();
+  
+  // Set the time zone offset to Egypt Standard Time (EST)
+  timeInEgypt.setMinutes(timeInEgypt.getMinutes() + 180);
 
+  return timeInEgypt;
+}
 
 //------------------------------------------------------------------------
 export const upcomingTasks = async(req,res)=>{
@@ -39,10 +47,9 @@ export const upcomingTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = new Date()
-    currentDate.setHours(0,0,0,0)
+    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
     const tasks = await taskModel.find({userId:id})
-    const upcoming = tasks.filter((task)=>task.date>currentDate)
+    const upcoming = tasks.filter((task)=>task.date.toLocaleString().split(',')[0]>currentDate)
     return res.status(200).json({messege:"done" , upcoming})
   }else{
     return res.status(404).json({messege:"error , user not find"})
@@ -54,10 +61,9 @@ export const delayedTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = new Date()
-    currentDate.setHours(0,0,0,0)
+    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
     const tasks = await taskModel.find({userId:id})
-    const delayed = tasks.filter((task)=>task.date<currentDate)
+    const delayed = tasks.filter((task)=>task.date.toLocaleString().split(',')[0]<currentDate)
     return res.status(200).json({messege:"done" , delayed})
   }else{
     return res.status(404).json({messege:"error , user not find"})
@@ -141,10 +147,11 @@ export const todayTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = new Date()
-    currentDate.setHours(0,0,0,0)
+    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
+    //currentDate.setHours(0,0,0,0)
+    console.log(currentDate.toLocaleString().split(',')[0])     
     const tasks = await taskModel.find({userId:id})
-    const today = tasks.filter((task)=>task.date.getDate() == currentDate.getDate())
+    const today = tasks.filter((task)=>  task.date.toLocaleString().split(',')[0] == currentDate)
 
     const todayUpcoming = today.filter((task)=>task.finished == 0)
     const todayFinished = today.filter((task)=>task.finished == 1)
