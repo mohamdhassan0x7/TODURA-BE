@@ -24,7 +24,7 @@ export function auth() {
         res.status(401).json({ messege: "invalid token" });
       }
     } catch (error) {
-      res.status(400).json({ messege: "error occured", error });
+      res.status(400).json({ messege: "error occured in auth",  error });
     }
   };
 }
