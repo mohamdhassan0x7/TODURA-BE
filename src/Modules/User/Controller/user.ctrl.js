@@ -51,7 +51,7 @@ export const upcomingTasks = async(req,res)=>{
     const tasks = await taskModel.find({userId:id})
 
     const upcoming = tasks.filter((task)=>task.date.toISOString().split('T')[0] > currentDate)
-    return res.status(200).json({messege:"done" , upcoming})
+    return res.status(200).json({messege:"done" , upcoming ,  AlltasksNum:tasks.length})
   }else{
     return res.status(404).json({messege:"error , user not find"})
   }
