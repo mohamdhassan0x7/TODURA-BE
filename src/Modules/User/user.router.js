@@ -14,7 +14,7 @@ router.get('/tasks/upcoming',auth(),controller.upcomingTasks)
 router.get('/tasks/delayed',auth(),controller.delayedTasks)
 router.get('/tasks/finished',auth(),controller.finishedTasks) 
 router.get('/tasks/today',auth(),controller.todayTasks) 
-//router.get('/tasks/all',auth(),controller.allTasks) 
+router.get('/profile',auth(),controller.profile) 
 router.delete('/tasks/delete',auth(),controller.removeTask)
 router.patch('/tasks/setFinished' , auth() , controller.setFinished)
 

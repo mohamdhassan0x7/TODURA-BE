@@ -65,7 +65,7 @@ export const delayedTasks = async(req,res)=>{
     const currentDate = getCurrentTimeInEgypt().toISOString().split('T')[0]
     const tasks = await taskModel.find({userId:id})
     const delayed = tasks.filter((task)=>task.date.toISOString().split('T')[0]<currentDate)
-    return res.status(200).json({messege:"done" , delayed})
+    return res.status(200).json({messege:"done" , delayed , AlltasksNum:tasks.length})
   }else{
     return res.status(404).json({messege:"error , user not find"})
   }
@@ -161,14 +161,18 @@ export const todayTasks = async(req,res)=>{
   }
 }
 
-// export const allTasks = async (req,res)=>{
-//   const id = req.user._id
+export const profile = async (req,res)=>{
+  const id = req.user._id
 
-//   const user = await userModel.findById(id)
-//   if(user){  
-//     const tasks = await taskModel.find({userId:id})
-//     return res.status(200).json({messege:"done" ,tasks})
-//   }else{
-//     return res.status(404).json({messege:"error , user not find"})
-//   }
-// }
+  const user = await userModel.findById(id)
+  if(user){
+    const currentDate = getCurrentTimeInEgypt().toISOString().split('T')[0]
+    const tasks = await taskModel.find({userId:id})
+    const finished = tasks.filter((task)=>task.finished==1)
+    const delayed = tasks.filter((task)=>task.date.toISOString().split('T')[0]<currentDate)
+
+    return res.status(200).json({messege:"done" , user ,NoDelayed:delayed.lenght , NoFinished:finished.length , NoAll:tasks.length})
+  }else{
+    return res.status(404).json({messege:"error , user not find"})
+  }
+}
