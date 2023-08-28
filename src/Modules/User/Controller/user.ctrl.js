@@ -47,9 +47,10 @@ export const upcomingTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
+    const currentDate = getCurrentTimeInEgypt().toISOString().split('T')[0] 
     const tasks = await taskModel.find({userId:id})
-    const upcoming = tasks.filter((task)=>task.date.toLocaleString().split(',')[0]>currentDate)
+
+    const upcoming = tasks.filter((task)=>task.date.toISOString().split('T')[0] > currentDate)
     return res.status(200).json({messege:"done" , upcoming})
   }else{
     return res.status(404).json({messege:"error , user not find"})
@@ -61,9 +62,9 @@ export const delayedTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
+    const currentDate = getCurrentTimeInEgypt().toISOString().split('T')[0]
     const tasks = await taskModel.find({userId:id})
-    const delayed = tasks.filter((task)=>task.date.toLocaleString().split(',')[0]<currentDate)
+    const delayed = tasks.filter((task)=>task.date.toISOString().split('T')[0]<currentDate)
     return res.status(200).json({messege:"done" , delayed})
   }else{
     return res.status(404).json({messege:"error , user not find"})
@@ -147,11 +148,10 @@ export const todayTasks = async(req,res)=>{
 
   const user = await userModel.findById(id)
   if(user){
-    const currentDate = getCurrentTimeInEgypt().toLocaleString().split(',')[0]
-    //currentDate.setHours(0,0,0,0)
+    const currentDate = getCurrentTimeInEgypt().toISOString().split('T')[0] 
     console.log(currentDate.toLocaleString().split(',')[0])     
     const tasks = await taskModel.find({userId:id})
-    const today = tasks.filter((task)=>  task.date.toLocaleString().split(',')[0] == currentDate)
+    const today = tasks.filter((task)=>  task.date.toISOString().split('T')[0] == currentDate)
 
     const todayUpcoming = today.filter((task)=>task.finished == 0)
     const todayFinished = today.filter((task)=>task.finished == 1)
