@@ -32,9 +32,7 @@ export const signUp = async (req, res) => {
         );
         const link = `${req.protocol}://${req.headers.host}${process.env.baseUrl}/auth/confirmEmail/${confirmationToken}`;
 
-        const info = await confirmationMail(
-          email,
-          "Email Confirmation",
+        const info = confirmationMail(email,"Email Confirmation",
           ` 
                 <a href=${link}>click here to confirm Email <a>
         `
