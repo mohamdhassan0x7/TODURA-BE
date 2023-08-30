@@ -6,7 +6,8 @@ import { nanoid } from "nanoid";
 
 export const signUp = async (req, res) => {
   try {
-    const { fName, lName, email, password , cPassword , age, gender } = req.body;
+    let { fName, lName, email, password , cPassword , age, gender } = req.body;
+    email = email.toLowerCase()
 
     const preUser = await userModel.findOne({ email });
     if (!preUser) {
@@ -86,8 +87,8 @@ export const finishConfirmation = async (req, res) => {
 
 export const signIn = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
+    let { email, password } = req.body;
+    email = email.toLowerCase()
     const user = await userModel.findOne({ email });
     if (user) {
       if (user.confirmEmail) {
