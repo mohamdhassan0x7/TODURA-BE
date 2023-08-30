@@ -5,8 +5,8 @@ export const confirmationMail = (dest , subject , messege)=>{
 
 nodeoutlook.sendEmail({
     auth: {
-        user: process.env.confirmMail,
-        pass: process.env.confirmMailPassword
+        user: "todura.confirmation@outlook.com",
+        pass: "01094762709Mm"
     },
     from: process.env.confirmMail,
     to: dest,
