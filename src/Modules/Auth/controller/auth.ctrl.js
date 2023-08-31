@@ -22,6 +22,7 @@ export const signUp = async (req, res) => {
         password: hashedPassword,
         age,
         gender,
+        confirmEmail:true
       });
       const savedUser = await newUser.save();
 
@@ -30,13 +31,15 @@ export const signUp = async (req, res) => {
           { id: savedUser._id },
           process.env.confirmationTokenSignature
         );
-        const link = `${req.protocol}://${req.headers.host}${process.env.baseUrl}/auth/confirmEmail/${confirmationToken}`;
+        // const link = `${req.protocol}://${req.headers.host}${process.env.baseUrl}/auth/confirmEmail/${confirmationToken}`;
 
-        const info = confirmationMail(email,"Email Confirmation",
-          ` 
-                <a href=${link}>click here to confirm Email <a>
-        `
-        );
+        // const info = await confirmationMail(
+        //   email,
+        //   "Email Confirmation",
+        //   ` 
+        //         <a href=${link}>click here to confirm Email <a>
+        // `
+        // );
         console.log(info)
 
         return res.status(201).json({
