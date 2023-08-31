@@ -5,7 +5,7 @@ import { confirmationMail } from "../../../Services/emailConfirmation.js";
 import { nanoid } from "nanoid";
 
 export const signUp = async (req, res) => {
-  try {
+  // try {
     let { fName, lName, email, password , cPassword , age, gender } = req.body;
     email = email.toLowerCase()
 
@@ -40,7 +40,6 @@ export const signUp = async (req, res) => {
         //         <a href=${link}>click here to confirm Email <a>
         // `
         // );
-        console.log(info)
 
         return res.status(201).json({
           messege: "done, confirmation link have been sent to your email",
@@ -53,9 +52,9 @@ export const signUp = async (req, res) => {
       //Conflict
       return res.status(409).json({ messege: "email already exists" });
     }
-  } catch (error) {
-    return res.status(400).json({ messege: "error occured", error });
-  }
+  // } catch (error) {
+  //   return res.status(400).json({ messege: "error occured", error });
+  // }
 };
 
 export const finishConfirmation = async (req, res) => {
